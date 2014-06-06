@@ -1,6 +1,8 @@
 requires 'CPAN::DistnameInfo';
+requires 'Getopt::Long';
 requires 'JSON';
 requires 'List::UtilsBy';
+requires 'Module::CPANfile';
 requires 'Module::Metadata';
 requires 'perl', '5.008001';
 requires 'version', '0.77';
