@@ -9,7 +9,7 @@ App::CPANGhq - Clone module source codes with ghq
 
 # DESCRIPTION
 
-App::CPANGhq is to clone module sources with `ghq`.
+App::CPANGhq is to clone module sources with [ghq](https://github.com/motemen/ghq).
 
 This is a backend module of [cpan-ghq](http://search.cpan.org/perldoc?cpan-ghq).
 

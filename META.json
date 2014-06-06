@@ -50,6 +50,7 @@
             "List::UtilsBy" : "0",
             "Module::CPANfile" : "0",
             "Module::Metadata" : "0",
+            "Pod::Usage" : "0",
             "perl" : "5.008001",
             "version" : "0.77"
          }

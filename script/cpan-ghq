@@ -3,3 +3,35 @@ use strict;
 use warnings;
 use App::CPANGhq;
 App::CPANGhq->run(@ARGV);
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+cpan-ghq - clone module codes with ghq
+
+=head1 SYNOPSIS
+
+    % cpan-ghq Module::Name
+
+or
+
+    % cpan-ghq --cpanfile
+
+=head2 OPTIONS
+
+=over
+
+=item cpanfile
+
+=back
+
+=head1 DESCRIPTION
+
+App::CPANGhq is to clone module sources with L<ghq|https://github.com/motemen/ghq>.
+
+=head1 INSTALL
+
+This module requires L<ghq|https://github.com/motemen/ghq> to be installed.

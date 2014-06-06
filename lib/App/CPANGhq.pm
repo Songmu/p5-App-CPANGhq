@@ -152,6 +152,7 @@ sub search_mirror_index {
 
 1;
 __END__
+=for stopwords ghq
 
 =encoding utf-8
 
@@ -166,7 +167,7 @@ App::CPANGhq - Clone module source codes with ghq
 
 =head1 DESCRIPTION
 
-App::CPANGhq is to clone module sources with C<ghq>.
+App::CPANGhq is to clone module sources with L<ghq|https://github.com/motemen/ghq>.
 
 This is a backend module of L<cpan-ghq>.
 
@@ -190,4 +191,3 @@ it under the same terms as Perl itself.
 Songmu E<lt>y.songmu@gmail.comE<gt>
 
 =cut
-
