@@ -21,32 +21,12 @@ sub run {
     my @modules = @$argv;
 
     if ($opt->{cpanfile}) {
-        push @modules, $class->_resolve_modules_from_cpanfile;
+        push @modules, $class->resolve_modules_from_cpanfile;
     }
 
     my $self = $class->new;
-    for my $module (@modules) {
-        my $dist_path = $self->search_mirror_index($module);
-        my $d = CPAN::DistnameInfo->new($dist_path);
-        my $dist_name = $d->dist;
 
-        unless (Module::Metadata->new_from_module($module)) {
-            print "Installing $module\n";
-            !system 'cpanm', '--notest', $module or do {
-                warn "Failed installing $module :" . $! . "\n";
-                next;
-            };
-        }
-
-        my $repo = $self->resolve_repo($dist_name);
-
-        if ($repo) {
-            !system 'ghq', 'get', $repo or warn $!;
-        }
-        else {
-            warn "Repository of $module is not found.\n";
-        }
-    }
+    $self->clone_modules(@modules);
 }
 
 sub parse_options {
@@ -65,11 +45,11 @@ sub parse_options {
     (\%opt, \@argv);
 }
 
-sub _resolve_modules_from_cpanfile {
-    my $class = shift;
+sub resolve_modules_from_cpanfile {
+    my ($class, $file) = @_;
 
     require Module::CPANfile;
-    my $cpanfile = Module::CPANfile->load;
+    my $cpanfile = Module::CPANfile->load($file);
     my $prereq_specs = $cpanfile->prereq_specs;
 
     my @modules;
@@ -83,6 +63,33 @@ sub _resolve_modules_from_cpanfile {
 
 sub new {
     bless {}, shift;
+}
+
+sub clone_modules {
+    my ($self, @modules) = @_;
+
+    for my $module (@modules) {
+        my $dist_path = $self->search_mirror_index($module);
+        my $d = CPAN::DistnameInfo->new($dist_path);
+        my $dist_name = $d->dist;
+
+        unless (Module::Metadata->new_from_module($module)) {
+            print "Installing $module\n";
+            !system 'cpanm', '--notest', $module or do {
+                warn "Failed installing $module :" . ($! || '') . "\n";
+                next;
+            };
+        }
+
+        my $repo = $self->resolve_repo($dist_name);
+
+        if ($repo) {
+            !system 'ghq', 'get', $repo or do { warn $! if $! };
+        }
+        else {
+            warn "Repository of $module is not found.\n";
+        }
+    }
 }
 
 sub resolve_repo {
