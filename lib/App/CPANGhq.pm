@@ -12,11 +12,27 @@ use JSON;
 use List::UtilsBy qw/max_by/;
 use Module::Metadata;
 use version 0.77;
+use Getopt::Long ();
 
 sub run {
     my ($class, @argv) = @_;
 
-    my @modules = @argv;
+    my ($opt, $argv) = $class->parse_options(@argv);
+    my @modules = @$argv;
+
+    if ($opt->{cpanfile}) {
+        require Module::CPANfile;
+        my $cpanfile = Module::CPANfile->load;
+        my $prereq_specs = $cpanfile->prereq_specs;
+
+        for my $phase (keys %$prereq_specs) {
+            my $phase_of_prereqs = $prereq_specs->{$phase};
+            my $requires_prereqs = $phase_of_prereqs->{requires};
+            push @modules, keys %$requires_prereqs;
+        }
+    }
+    @modules = grep { $_ ne 'perl' } @modules;
+
     my $self = $class->new;
     for my $module (@modules) {
         my $dist_path = $self->search_mirror_index($module);
@@ -37,6 +53,22 @@ sub run {
             warn "repository of $module have not found";
         }
     }
+}
+
+sub parse_options {
+    my ($class, @argv) = @_;
+
+    my $parser = Getopt::Long::Parser->new(
+        config => [qw/posix_default no_ignore_case bundling pass_through auto_help/],
+    );
+
+    local @ARGV = @argv;
+    $parser->getoptions(\my %opt, qw/
+        cpanfile
+    /);
+    @argv = @ARGV;
+
+    (\%opt, \@argv);
 }
 
 sub new {
