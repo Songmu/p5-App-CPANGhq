@@ -1,0 +1,5 @@
+#!perl
+use strict;
+use warnings;
+use App::CPANGhq;
+App::CPANGhq->run(@ARGV);
