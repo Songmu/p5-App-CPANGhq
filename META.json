@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "Clone module source codes with ghq",
    "author" : [
       "Songmu <y.songmu@gmail.com>"
    ],
@@ -45,8 +45,10 @@
       "runtime" : {
          "requires" : {
             "CPAN::DistnameInfo" : "0",
+            "Getopt::Long" : "0",
             "JSON" : "0",
             "List::UtilsBy" : "0",
+            "Module::CPANfile" : "0",
             "Module::Metadata" : "0",
             "perl" : "5.008001",
             "version" : "0.77"

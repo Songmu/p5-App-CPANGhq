@@ -1,14 +1,25 @@
 # NAME
 
-App::CPANGhq - It's new $module
+App::CPANGhq - Clone module source codes with ghq
 
 # SYNOPSIS
 
     use App::CPANGhq;
+    App::CPANGhq->run(@ARGV);
 
 # DESCRIPTION
 
-App::CPANGhq is ...
+App::CPANGhq is to clone module sources with `ghq`.
+
+This is a backend module of [cpan-ghq](http://search.cpan.org/perldoc?cpan-ghq).
+
+# INSTALL
+
+This module requires [ghq](https://github.com/motemen/ghq) to be installed.
+
+# SEE ALSO
+
+[cpan-ghq](http://search.cpan.org/perldoc?cpan-ghq)
 
 # LICENSE
 

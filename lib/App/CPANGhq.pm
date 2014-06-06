@@ -149,7 +149,6 @@ sub search_mirror_index {
     }
 }
 
-
 1;
 __END__
 
@@ -157,15 +156,26 @@ __END__
 
 =head1 NAME
 
-App::CPANGhq - It's new $module
+App::CPANGhq - Clone module source codes with ghq
 
 =head1 SYNOPSIS
 
     use App::CPANGhq;
+    App::CPANGhq->run(@ARGV);
 
 =head1 DESCRIPTION
 
-App::CPANGhq is ...
+App::CPANGhq is to clone module sources with C<ghq>.
+
+This is a backend module of L<cpan-ghq>.
+
+=head1 INSTALL
+
+This module requires L<ghq|https://github.com/motemen/ghq> to be installed.
+
+=head1 SEE ALSO
+
+L<cpan-ghq>
 
 =head1 LICENSE
 
