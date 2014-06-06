@@ -21,17 +21,8 @@ sub run {
     my @modules = @$argv;
 
     if ($opt->{cpanfile}) {
-        require Module::CPANfile;
-        my $cpanfile = Module::CPANfile->load;
-        my $prereq_specs = $cpanfile->prereq_specs;
-
-        for my $phase (keys %$prereq_specs) {
-            my $phase_of_prereqs = $prereq_specs->{$phase};
-            my $requires_prereqs = $phase_of_prereqs->{requires};
-            push @modules, keys %$requires_prereqs;
-        }
+        push @modules, $class->_resolve_modules_from_cpanfile;
     }
-    @modules = grep { $_ ne 'perl' } @modules;
 
     my $self = $class->new;
     for my $module (@modules) {
@@ -69,6 +60,22 @@ sub parse_options {
     @argv = @ARGV;
 
     (\%opt, \@argv);
+}
+
+sub _resolve_modules_from_cpanfile {
+    my $class = shift;
+
+    require Module::CPANfile;
+    my $cpanfile = Module::CPANfile->load;
+    my $prereq_specs = $cpanfile->prereq_specs;
+
+    my @modules;
+    for my $phase (keys %$prereq_specs) {
+        my $phase_of_prereqs = $prereq_specs->{$phase};
+        my $requires_prereqs = $phase_of_prereqs->{requires};
+        push @modules, keys %$requires_prereqs;
+    }
+    grep { $_ ne 'perl' } @modules;
 }
 
 sub new {
