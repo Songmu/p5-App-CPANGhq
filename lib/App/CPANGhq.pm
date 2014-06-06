@@ -24,6 +24,7 @@ sub run {
         my $dist_name = $d->dist;
 
         unless (Module::Metadata->new_from_module($module)) {
+            print "Installing $module\n";
             !system 'cpanm', '--notest', $module or die $!;
         }
 
