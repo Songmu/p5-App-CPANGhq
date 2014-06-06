@@ -4,6 +4,7 @@ requires 'JSON';
 requires 'List::UtilsBy';
 requires 'Module::CPANfile';
 requires 'Module::Metadata';
+requires 'Pod::Usage';
 requires 'perl', '5.008001';
 requires 'version', '0.77';
 

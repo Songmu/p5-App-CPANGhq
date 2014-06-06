@@ -13,6 +13,7 @@ use List::UtilsBy qw/max_by/;
 use Module::Metadata;
 use version 0.77;
 use Getopt::Long ();
+use Pod::Usage ();
 
 sub run {
     my ($class, @argv) = @_;
@@ -39,7 +40,7 @@ sub parse_options {
     local @ARGV = @argv;
     $parser->getoptions(\my %opt, qw/
         cpanfile
-    /);
+    /) or Pod::Usage::pod2usage(1);
     @argv = @ARGV;
 
     (\%opt, \@argv);
