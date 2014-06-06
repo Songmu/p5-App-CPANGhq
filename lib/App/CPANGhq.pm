@@ -44,7 +44,7 @@ sub run {
             !system 'ghq', 'get', $repo or warn $!;
         }
         else {
-            warn "repository of $module is not found.\n";
+            warn "Repository of $module is not found.\n";
         }
     }
 }
