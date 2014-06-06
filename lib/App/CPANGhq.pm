@@ -171,6 +171,8 @@ App::CPANGhq is to clone module sources with L<ghq|https://github.com/motemen/gh
 
 This is a backend module of L<cpan-ghq>.
 
+B<THE SOFTWARE IS STILL ALPHA QUALITY. API MAY CHANGE WITHOUT NOTICE.>
+
 =head1 INSTALL
 
 This module requires L<ghq|https://github.com/motemen/ghq> to be installed.
