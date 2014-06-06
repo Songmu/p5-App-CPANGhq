@@ -4,7 +4,7 @@
       "Songmu <y.songmu@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v1.0.0, CPAN::Meta::Converter version 2.141170",
+   "generated_by" : "Minilla/v1.1.0, CPAN::Meta::Converter version 2.141170",
    "license" : [
       "perl_5"
    ],
@@ -44,7 +44,12 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008005"
+            "CPAN::DistnameInfo" : "0",
+            "JSON" : "0",
+            "List::UtilsBy" : "0",
+            "Module::Metadata" : "0",
+            "perl" : "5.008001",
+            "version" : "0.77"
          }
       },
       "test" : {
@@ -54,6 +59,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/Songmu/p5-App-CPANGhq/issues"
+      },
+      "homepage" : "https://github.com/Songmu/p5-App-CPANGhq",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/Songmu/p5-App-CPANGhq.git",
+         "web" : "https://github.com/Songmu/p5-App-CPANGhq"
+      }
+   },
    "version" : "0.01",
    "x_authority" : "cpan:SONGMU"
 }
