@@ -32,7 +32,10 @@ sub run {
 
         unless (Module::Metadata->new_from_module($module)) {
             print "Installing $module\n";
-            !system 'cpanm', '--notest', $module or die $!;
+            !system 'cpanm', '--notest', $module or do {
+                warn "Failed installing $module :" . $! . "\n";
+                next;
+            };
         }
 
         my $repo = $self->resolve_repo($dist_name);
