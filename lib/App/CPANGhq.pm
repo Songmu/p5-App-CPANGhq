@@ -93,11 +93,16 @@ sub clone_modules {
 
     for my $module (@modules) {
         my $dist_path = $self->search_mirror_index($module);
+        unless ($dist_path) {
+            warn "skip $module: distribution is not found in packages file.\n";
+            next;
+        }
+
         my $d = CPAN::DistnameInfo->new($dist_path);
         my $dist_name = $d->dist;
 
         unless (Module::Metadata->new_from_module($module, inc => $self->search_inc)) {
-            warn "skip $module not installed in site_perl\n";
+            warn "skip $module: not installed in site_perl.\n";
             next;
         }
 
@@ -124,6 +129,8 @@ sub resolve_repo {
         next unless $dirbase =~ m!\A\Q$dist_name\E-[^-]+\z!ms;
 
         my $meta_json = "$d/MYMETA.json";
+        next unless -f $meta_json && -r $meta_json;
+
         my $meta = decode_json(do {
             local $/;
             open my $fh, '<', $meta_json or die $!;
@@ -135,13 +142,14 @@ sub resolve_repo {
 
     my $meta = max_by { version->parse($_->{version})->numify } @candidate_metas;
 
-    $meta->{resources}{repository}{url};
+    $meta && $meta->{resources}{repository}{url};
 }
 
 sub search_mirror_index {
     my ($self, $module) = @_;
 
-    open my $fh, '<', $self->packages_file or return;
+    my $packages_file = $self->packages_file or die 'no packages file found';
+    open my $fh, '<', $packages_file or die $!;
     while (<$fh>) {
         if (my (undef, $tar_path) = $_ =~ m!^
             \Q$module\E
