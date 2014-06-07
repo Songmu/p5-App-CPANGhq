@@ -2,6 +2,12 @@ Revision history for Perl extension App-CPANGhq
 
 {{$NEXT}}
 
+    - care strange format of distribution directory name (e.g. Hoge-Fuga-1.02a)
+    - care core modules
+    - add test
+    - don't force install the module even if not installed
+    - fix error handling
+
 0.01 2014-06-06T16:29:54Z
 
     - original version
