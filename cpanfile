@@ -1,4 +1,5 @@
 requires 'CPAN::DistnameInfo';
+requires 'Class::Accessor::Lite::Lazy', '0.03';
 requires 'Getopt::Long';
 requires 'JSON';
 requires 'List::UtilsBy';

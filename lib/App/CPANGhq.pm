@@ -15,6 +15,30 @@ use version 0.77;
 use Getopt::Long ();
 use Pod::Usage ();
 
+our @MIRRORS = qw/http%www.cpan.org http%cpan.metacpan.org/;
+
+use Class::Accessor::Lite::Lazy 0.03 (
+    new     => 1,
+    ro_lazy => {
+        packages_file => sub {
+            max_by { +(stat($_))[9] } #mtime
+            grep {-f $_}
+            map  {
+                "$ENV{HOME}/.cpanm/sources/$_/02packages.details.txt";
+            } @MIRRORS;
+        },
+        installed_base => sub { $Config{sitelibexp} },
+        search_inc     => sub {
+            my $d = shift->installed_base;
+            [$d, "$d/$Config{archname}"];
+        },
+        meta_dir => sub {
+            shift->installed_base . "/$Config{archname}/.meta";
+        }
+    },
+);
+
+## class methods
 sub run {
     my ($class, @argv) = @_;
 
@@ -62,10 +86,8 @@ sub resolve_modules_from_cpanfile {
     grep { $_ ne 'perl' } @modules;
 }
 
-sub new {
-    bless {}, shift;
-}
 
+## object methods
 sub clone_modules {
     my ($self, @modules) = @_;
 
@@ -88,18 +110,6 @@ sub clone_modules {
             warn "Repository of $module is not found.\n";
         }
     }
-}
-
-sub search_inc {
-    my $self = shift;
-
-    $self->{search_inc} ||= [$Config{sitelibexp}, $Config{sitearchexp}];
-}
-
-sub meta_dir {
-    my $self = shift;
-
-    $self->{meta_dir} ||= $Config{sitearchexp} . '/.meta';
 }
 
 sub resolve_repo {
@@ -126,19 +136,6 @@ sub resolve_repo {
     my $meta = max_by { version->parse($_->{version})->numify } @candidate_metas;
 
     $meta->{resources}{repository}{url};
-}
-
-our @MIRRORS = qw/http%www.cpan.org http%cpan.metacpan.org/;
-
-sub packages_file {
-    my $self = shift;
-
-    $self->{packages_file} ||=
-        max_by { +(stat($_))[9] } #mtime
-        grep {-f $_}
-        map  {
-            "$ENV{HOME}/.cpanm/sources/$_/02packages.details.txt";
-        } @MIRRORS;
 }
 
 sub search_mirror_index {
