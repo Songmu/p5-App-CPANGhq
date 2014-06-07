@@ -99,25 +99,24 @@ sub resolve_repo {
     my $base = "$Config{sitearchexp}/.meta";
     my @dirs = glob "$base/$dist_name*";
 
-    my @candidate_dirs;
+    my @candidate_metas;
     for my $d (@dirs) {
         my $dirbase = basename $d;
-        my ($version) = $dirbase =~ m!\A\Q$dist_name\E-([^-]+)\z!ms;
-        next unless $version;
-        push @candidate_dirs, [$d, $version];
+        next unless $dirbase =~ m!\A\Q$dist_name\E-[^-]+\z!ms;
+
+        my $meta_json = "$d/MYMETA.json";
+        my $meta = decode_json(do {
+            local $/;
+            open my $fh, '<', $meta_json or die $!;
+            <$fh>
+        });
+
+        push @candidate_metas, $meta;
     }
 
-    my $dir = max_by { version->parse($_->[1]) } @candidate_dirs;
-       $dir = $dir->[0];
+    my $meta = max_by { version->parse($_->{version})->numify } @candidate_metas;
 
-    my $meta = "$dir/MYMETA.json";
-    my $meta_info = decode_json(do {
-        local $/;
-        open my $fh, '<', $meta or die $!;
-        <$fh>
-    });
-
-    $meta_info->{resources}{repository}{url};
+    $meta->{resources}{repository}{url};
 }
 
 our @MIRRORS = qw/http%www.cpan.org http%cpan.metacpan.org/;
