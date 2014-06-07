@@ -3,15 +3,15 @@ use 5.008001;
 use strict;
 use warnings;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use Config;
 use CPAN::DistnameInfo;
-use File::Basename;
+use File::Basename qw/basename/;
 use JSON;
 use List::UtilsBy qw/max_by/;
 use Module::Metadata;
-use version 0.77;
+use version 0.77 ();
 use Getopt::Long ();
 use Pod::Usage ();
 
