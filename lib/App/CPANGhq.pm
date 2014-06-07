@@ -74,12 +74,9 @@ sub clone_modules {
         my $d = CPAN::DistnameInfo->new($dist_path);
         my $dist_name = $d->dist;
 
-        unless (Module::Metadata->new_from_module($module)) {
-            print "Installing $module\n";
-            !system 'cpanm', '--notest', $module or do {
-                warn "Failed installing $module :" . ($! || '') . "\n";
-                next;
-            };
+        unless (Module::Metadata->new_from_module($module, inc => $self->search_inc)) {
+            warn "skip $module not installed in site_perl\n";
+            next;
         }
 
         my $repo = $self->resolve_repo($dist_name);
@@ -93,10 +90,22 @@ sub clone_modules {
     }
 }
 
+sub search_inc {
+    my $self = shift;
+
+    $self->{search_inc} ||= [$Config{sitelibexp}, $Config{sitearchexp}];
+}
+
+sub meta_dir {
+    my $self = shift;
+
+    $self->{meta_dir} ||= $Config{sitearchexp} . '/.meta';
+}
+
 sub resolve_repo {
     my ($self, $dist_name) = @_;
 
-    my $base = "$Config{sitearchexp}/.meta";
+    my $base = $self->meta_dir;
     my @dirs = glob "$base/$dist_name*";
 
     my @candidate_metas;
