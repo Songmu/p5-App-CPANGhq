@@ -4,7 +4,7 @@
       "Songmu <y.songmu@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v1.1.0, CPAN::Meta::Converter version 2.141170",
+   "generated_by" : "Minilla/v2.1.1, CPAN::Meta::Converter version 2.140640",
    "license" : [
       "perl_5"
    ],
@@ -30,6 +30,7 @@
          "requires" : {
             "CPAN::Meta" : "0",
             "CPAN::Meta::Prereqs" : "0",
+            "Devel::CheckBin" : "0",
             "Module::Build" : "0.38"
          }
       },
@@ -44,13 +45,10 @@
       },
       "runtime" : {
          "requires" : {
-            "CPAN::DistnameInfo" : "0",
             "Class::Accessor::Lite::Lazy" : "0.03",
             "Getopt::Long" : "0",
-            "JSON" : "0",
-            "List::UtilsBy" : "0",
+            "MetaCPAN::Client" : "1.005000",
             "Module::CPANfile" : "0",
-            "Module::Metadata" : "0",
             "Pod::Usage" : "0",
             "perl" : "5.008001",
             "version" : "0.77"
@@ -75,5 +73,8 @@
       }
    },
    "version" : "0.02",
-   "x_authority" : "cpan:SONGMU"
+   "x_authority" : "cpan:SONGMU",
+   "x_contributors" : [
+      "Tatsuhiko Miyagawa <miyagawa@bulknews.net>"
+   ]
 }

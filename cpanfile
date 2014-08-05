@@ -1,14 +1,11 @@
+requires 'App::CPANRepo';
 requires 'Class::Accessor::Lite::Lazy', '0.03';
 requires 'Getopt::Long';
-requires 'Module::CPANfile';
-requires 'MetaCPAN::Client', '1.005000';
 requires 'Pod::Usage';
 requires 'perl', '5.008001';
-requires 'version', '0.77';
 
 on configure => sub {
-    requires 'CPAN::Meta';
-    requires 'CPAN::Meta::Prereqs';
+    requires 'Devel::CheckBin';
     requires 'Module::Build';
 };
 

@@ -11,9 +11,9 @@ App::CPANGhq - Clone module source codes with ghq
 
 App::CPANGhq is to clone module sources with [ghq](https://github.com/motemen/ghq).
 
-This is a backend module of [cpan-ghq](http://search.cpan.org/perldoc?cpan-ghq).
+This is a backend module of [cpan-ghq](https://metacpan.org/pod/cpan-ghq).
 
-__THE SOFTWARE IS STILL ALPHA QUALITY. API MAY CHANGE WITHOUT NOTICE.__
+**THE SOFTWARE IS STILL ALPHA QUALITY. API MAY CHANGE WITHOUT NOTICE.**
 
 # INSTALL
 
@@ -21,7 +21,7 @@ This module requires [ghq](https://github.com/motemen/ghq) to be installed.
 
 # SEE ALSO
 
-[cpan-ghq](http://search.cpan.org/perldoc?cpan-ghq)
+[cpan-ghq](https://metacpan.org/pod/cpan-ghq)
 
 # LICENSE
 
