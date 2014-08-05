@@ -10,14 +10,14 @@ use File::Basename qw/basename/;
 use version 0.77 ();
 use Getopt::Long ();
 use Pod::Usage ();
-use MetaCPAN::Client;
+use App::CPANRepo;
 
 our @MIRRORS = qw/http%www.cpan.org http%cpan.metacpan.org/;
 
 use Class::Accessor::Lite::Lazy 0.03 (
     new     => 1,
     ro_lazy => {
-        client => sub { MetaCPAN::Client->new },
+        _cpanrepo => sub { App::CPANRepo->new },
     }
 );
 
@@ -70,7 +70,7 @@ sub clone_modules {
     my ($self, @modules) = @_;
 
     for my $module (@modules) {
-        my $repo = $self->resolve_repo($module);
+        my $repo = $self->_cpanrepo->resolve_repo($module);
         if ($repo) {
             !system 'ghq', 'get', $repo or do { warn $! if $! };
         }
@@ -78,21 +78,6 @@ sub clone_modules {
             warn "Repository of $module is not found.\n";
         }
     }
-}
-
-sub resolve_repo {
-    my ($self, $name) = @_;
-
-    my $repo;
-    eval {
-        my $module = $self->client->module($name);
-        my $release = $self->client->release($module->distribution);
-        if ($release->resources->{repository}) {
-            $repo = $release->resources->{repository}{url};
-        }
-    };
-
-    return $repo;
 }
 
 1;
