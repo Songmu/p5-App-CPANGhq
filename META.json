@@ -28,8 +28,6 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "CPAN::Meta" : "0",
-            "CPAN::Meta::Prereqs" : "0",
             "Devel::CheckBin" : "0",
             "Module::Build" : "0.38"
          }
@@ -45,13 +43,11 @@
       },
       "runtime" : {
          "requires" : {
+            "App::CPANRepo" : "0",
             "Class::Accessor::Lite::Lazy" : "0.03",
             "Getopt::Long" : "0",
-            "MetaCPAN::Client" : "1.005000",
-            "Module::CPANfile" : "0",
             "Pod::Usage" : "0",
-            "perl" : "5.008001",
-            "version" : "0.77"
+            "perl" : "5.008001"
          }
       },
       "test" : {
@@ -72,7 +68,7 @@
          "web" : "https://github.com/Songmu/p5-App-CPANGhq"
       }
    },
-   "version" : "0.02",
+   "version" : "0.10",
    "x_authority" : "cpan:SONGMU",
    "x_contributors" : [
       "Tatsuhiko Miyagawa <miyagawa@bulknews.net>"
