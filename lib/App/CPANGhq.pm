@@ -5,9 +5,6 @@ use warnings;
 
 our $VERSION = "0.02";
 
-use Config;
-use File::Basename qw/basename/;
-use version 0.77 ();
 use Getopt::Long ();
 use Pod::Usage ();
 use App::CPANRepo;
@@ -38,36 +35,19 @@ sub parse_options {
     );
 
     local @ARGV = @argv;
-    $parser->getoptions(\my %opt, qw/
-        cpanfile
-    /) or Pod::Usage::pod2usage(1);
+    $parser->getoptions(\my %opt) or Pod::Usage::pod2usage(1);
     @argv = @ARGV;
 
     (\%opt, \@argv);
 }
-
-sub resolve_modules_from_cpanfile {
-    my ($class, $file) = @_;
-
-    require Module::CPANfile;
-    my $cpanfile = Module::CPANfile->load($file);
-    my $prereq_specs = $cpanfile->prereq_specs;
-
-    my @modules;
-    for my $phase (keys %$prereq_specs) {
-        my $phase_of_prereqs = $prereq_specs->{$phase};
-        my $requires_prereqs = $phase_of_prereqs->{requires};
-        push @modules, keys %$requires_prereqs;
-    }
-    grep { $_ ne 'perl' } @modules;
-}
-
 
 ## object methods
 sub clone_modules {
     my ($self, @modules) = @_;
 
     for my $module (@modules) {
+        next if $module eq 'perl';
+
         my $repo = $self->_cpanrepo->resolve_repo($module);
         if ($repo) {
             !system 'ghq', 'get', $repo or do { warn $! if $! };

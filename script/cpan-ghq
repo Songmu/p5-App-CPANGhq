@@ -14,19 +14,7 @@ cpan-ghq - clone module codes with ghq
 
 =head1 SYNOPSIS
 
-    % cpan-ghq Module::Name
-
-or
-
-    % cpan-ghq --cpanfile
-
-=head2 OPTIONS
-
-=over
-
-=item cpanfile
-
-=back
+    % cpan-ghq Module::Name [Module::Name2...]
 
 =head1 DESCRIPTION
 
