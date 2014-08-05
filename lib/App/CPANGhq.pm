@@ -12,8 +12,6 @@ use Getopt::Long ();
 use Pod::Usage ();
 use App::CPANRepo;
 
-our @MIRRORS = qw/http%www.cpan.org http%cpan.metacpan.org/;
-
 use Class::Accessor::Lite::Lazy 0.03 (
     new     => 1,
     ro_lazy => {
